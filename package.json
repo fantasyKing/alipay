@@ -33,6 +33,7 @@
     "webpack": "^1.12.9"
   },
   "dependencies": {
+    "request": "^2.67.0",
     "ursa": "^0.9.1"
   }
 }

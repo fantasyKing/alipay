@@ -21,9 +21,10 @@ describe('test rsa', () => {
   const publicKey = fs.readFileSync(path.join(__dirname, './rsa_public_key.pem'));
   const privateKey = fs.readFileSync(path.join(__dirname, './rsa_private_key.pem'));
 
+  const testSource = 'test source';
+
   it('encrypt decrypt', () => {
 
-    const testSource = 'test source';
     const encrypted = rsa.rsaEncrypt(testSource, publicKey);
     const decrypted = rsa.rsaDecrypt(encrypted, privateKey);
     expect(decrypted).to.be.equal(testSource);
@@ -31,7 +32,6 @@ describe('test rsa', () => {
 
   it('node-forge', () => {
 
-    const testSource = 'test source';
     const encrypted = rsa.rsaEncrypt(testSource, pPublicKey);
     const decrypted = rsa.rsaDecrypt(encrypted, pPrivateKey);
     expect(decrypted).to.be.equal(testSource);
@@ -39,7 +39,6 @@ describe('test rsa', () => {
 
   it('sign verify', () => {
 
-    const testSource = 'test source';
     const signature = rsa.rsaSign(testSource, pPrivateKey);
     assert(rsa.rsaVerify(testSource, pPublicKey, signature), 'verify should be true');
   });
