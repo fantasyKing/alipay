@@ -18,8 +18,8 @@ describe('test rsa', () => {
   const pPublicKey = new Buffer(forge.pki.publicKeyToPem(pKeypair.publicKey), 'utf8');
   const pPrivateKey = new Buffer(forge.pki.privateKeyToPem(pKeypair.privateKey), 'utf8');
 
-  const publicKey = fs.readFileSync(path.join(__dirname, './rsa_public_key.pem'));
-  const privateKey = fs.readFileSync(path.join(__dirname, './rsa_private_key.pem'));
+  const publicKey = fs.readFileSync(path.join(__dirname, '../res/rsa_public_key.pem'));
+  const privateKey = fs.readFileSync(path.join(__dirname, '../res/rsa_private_key.pem'));
 
   const testSource = 'test source';
 

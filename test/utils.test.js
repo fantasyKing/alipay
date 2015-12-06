@@ -33,11 +33,11 @@ describe('test utils', () => {
       sign_type: 'sign_type'
     };
 
-    utils.filterParams(params);
+    const rst = utils.filterParams(params);
 
-    assert(!params.sign);
-    assert(!params.sign_type);
-    assert(!params.e);
+    assert(!rst.sign);
+    assert(!rst.sign_type);
+    assert(!rst.e);
   });
 
   it('sortParams', () => {
@@ -57,12 +57,26 @@ describe('test utils', () => {
     expect(Object.keys(sorted)).to.not.eql(['aa', '11', '12', 'ab', 'e', 'sign']);
   });
 
-  it.only('fetch', async () => {
+  it('fetch', async () => {
 
-    const getResponse = await utils.fetch.get('http://sudoboot.com');
+    const fetchResponse = await utils.fetch({url: 'httdps://google.com', method: 'GET'}).catch((e)=>{console.log(e)});
+    const getResponse = await utils.fetch.get('https://httpbin.org/get');
     const postResponse = await utils.fetch.post('https://httpbin.org/post', {form: {key: 'value'}});
+
+    assert(!fetchResponse);
     assert(postResponse.statusCode === 200);
     assert(getResponse.statusCode === 200);
+  });
+
+  it.only('Log', () => {
+
+    const log1 = utils.Log(1);
+    const log2 = utils.Log(0);
+    log1('log enabled');
+    log2('this should not display.');
+
+
+
   });
 
 });
