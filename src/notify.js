@@ -71,7 +71,7 @@ class AlipayNotify {
 
     if (transport === 'https') {
 
-      options.ca = fs.readFileSync(this.config.cacert);
+      //options.ca = fs.readFileSync(this.config.cacert);
     }
 
     let failed = false;
@@ -81,7 +81,7 @@ class AlipayNotify {
       utils.Log(1)('remoteVerify error: ', e);
     });
 
-    console.log(response ? response.body : false);
+    utils.Log(1)(response ? response.body : false);
 
     if (failed) {
 

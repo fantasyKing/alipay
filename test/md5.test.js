@@ -2,7 +2,7 @@
  * Created on 12/3/15.
  */
 
-import md5 from '../lib/md5';
+import md5 from '../src/md5';
 import chai from 'chai';
 
 let expect = chai.expect;

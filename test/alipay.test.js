@@ -2,8 +2,7 @@
  * Created on 12/7/15.
  */
 
-import 'babel-polyfill';
-import Alipay from '../lib';
+import Alipay from '../index.js';
 import chai from 'chai';
 import config from '../res/config.test';
 
@@ -13,7 +12,7 @@ const assert = chai.assert;
 describe('test Alipay', () => {
 
   const alipay = new Alipay(config);
-  it('verifyNotify', async () => {
+  it.only('verifyNotify', async () => {
 
     const params = {
       partner: '2088012534717844',
@@ -22,6 +21,6 @@ describe('test Alipay', () => {
       sign: '2ecbc70a9e9b6794a258da301251ed72'
     };
     const rst = await alipay.verifyNotify(params);
-    assert(!rst);
+    expect(rst).to.be.false;
   });
 });

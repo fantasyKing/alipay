@@ -1,3 +1,1 @@
-import Alipay from './lib'
-
-export default Alipay;
+module.exports = require('./dist');

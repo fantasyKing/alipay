@@ -3,7 +3,7 @@
  */
 
 import 'babel-polyfill';
-import utils from '../lib/utils';
+import utils from '../src/utils';
 import chai from 'chai';
 
 const expect = chai.expect;
@@ -68,15 +68,12 @@ describe('test utils', () => {
     assert(getResponse.statusCode === 200);
   });
 
-  it.only('Log', () => {
+  it('Log', () => {
 
     const log1 = utils.Log(1);
     const log2 = utils.Log(0);
     log1('log enabled');
     log2('this should not display.');
 
-
-
   });
-
 });

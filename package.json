@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -t 30000 --compilers js:babel-core/register"
+    "test": "mocha -t 30000 --compilers js:babel-core/register",
+    "dist": "babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,6 @@
     "babel": "^6.1.18",
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
-    "babel-polyfill": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
     "babel-preset-stage-1": "^6.1.18",
@@ -33,6 +33,7 @@
     "webpack": "^1.12.9"
   },
   "dependencies": {
+    "babel-polyfill": "^6.2.0",
     "request": "^2.67.0",
     "ursa": "^0.9.1"
   }

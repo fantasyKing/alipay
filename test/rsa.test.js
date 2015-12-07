@@ -2,7 +2,7 @@
  * Created on 12/4/15.
  */
 
-import rsa from '../lib/rsa';
+import rsa from '../src/rsa';
 import chai from 'chai';
 import forge from 'node-forge';
 import fs from 'fs';
