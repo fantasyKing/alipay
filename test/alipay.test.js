@@ -12,7 +12,7 @@ const assert = chai.assert;
 describe('test Alipay', () => {
 
   const alipay = new Alipay(config);
-  it.only('verifyNotify', async () => {
+  it('verifyNotify', async () => {
 
     const params = {
       partner: '2088012534717844',

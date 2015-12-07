@@ -5,6 +5,8 @@
 import md5 from './md5';
 import rsa from './rsa';
 import utils from './utils';
+import qs from 'querystring';
+
 
 class AlipaySubmit {
 
@@ -43,7 +45,7 @@ class AlipaySubmit {
 
   buildRequestQueryString(params) {
 
-    return encodeURIComponent(utils.createQueryString(this.buildRequestParams(params)));
+    return qs.stringify(this.buildRequestParams(params));
   }
 
   async requestPayResult(params) {
