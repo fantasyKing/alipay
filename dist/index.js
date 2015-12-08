@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.notify = exports.rsa = exports.md5 = exports.utils = undefined;
+exports.Notify = exports.rsa = exports.md5 = exports.utils = undefined;
 
 require('babel-polyfill');
 
@@ -32,5 +32,5 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.utils = _utils2.default;
 exports.md5 = _md2.default;
 exports.rsa = _rsa2.default;
-exports.notify = _notify2.default;
+exports.Notify = _notify2.default;
 exports.default = _alipay2.default;
