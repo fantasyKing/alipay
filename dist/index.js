@@ -26,6 +26,10 @@ var _notify = require('./notify');
 
 var _notify2 = _interopRequireDefault(_notify);
 
+var _submit = require('./submit');
+
+var _submit2 = _interopRequireDefault(_submit);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = { utils: _utils2.default, md5: _md2.default, rsa: _rsa2.default, Notify: _notify2.default, Alipay: _alipay2.default };
+exports.default = { utils: _utils2.default, md5: _md2.default, rsa: _rsa2.default, Notify: _notify2.default, Alipay: _alipay2.default, Submit: _submit2.default };
