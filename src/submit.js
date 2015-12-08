@@ -96,3 +96,5 @@ class AlipaySubmit {
     return sHtml;
   }
 }
+
+export default AlipaySubmit;

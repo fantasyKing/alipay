@@ -4,6 +4,10 @@ var _createClass = (function () { function defineProperties(target, props) { for
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         * Created on 12/6/15.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         */
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _md = require('./md5');
 
 var _md2 = _interopRequireDefault(_md);
@@ -171,3 +175,5 @@ var AlipaySubmit = (function () {
 
   return AlipaySubmit;
 })();
+
+exports.default = AlipaySubmit;
