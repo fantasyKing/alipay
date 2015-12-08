@@ -5,5 +5,4 @@ import md5 from './md5';
 import rsa from './rsa';
 import Notify from './notify';
 
-export {utils, md5, rsa, Notify};
-export default Alipay;
+export default {utils, md5, rsa, Notify, Alipay};

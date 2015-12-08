@@ -11,7 +11,7 @@ const assert = chai.assert;
 
 describe('test Alipay', () => {
 
-  const alipay = new Alipay(config);
+  const alipay = new Alipay.Alipay(config);
   it('verifyNotify', async () => {
 
     const params = {
