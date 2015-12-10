@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-require('babel-polyfill');
-
 var _alipay = require('./alipay');
 
 var _alipay2 = _interopRequireDefault(_alipay);

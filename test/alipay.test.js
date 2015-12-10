@@ -1,7 +1,7 @@
 /**
  * Created on 12/7/15.
  */
-
+import 'babel-polyfill';
 import Alipay from '../index.js';
 import chai from 'chai';
 import config from '../res/config.test';

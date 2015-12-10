@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import Alipay from './alipay';
 import utils from './utils';
 import md5 from './md5';
