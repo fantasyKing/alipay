@@ -1,7 +1,7 @@
 /**
  * Created on 12/6/15.
  */
-
+import fs from 'fs';
 import md5 from './md5';
 import rsa from './rsa';
 import utils from './utils';

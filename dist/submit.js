@@ -8,6 +8,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
 var _md = require('./md5');
 
 var _md2 = _interopRequireDefault(_md);
@@ -60,7 +64,7 @@ var AlipaySubmit = (function () {
         return _md2.default.md5Sign(source, md5_key);
       } else if (sign_type === 'RSA') {
 
-        var rsa_private_key = fs.readFileSync(this.config.rsa_private_key);
+        var rsa_private_key = _fs2.default.readFileSync(this.config.rsa_private_key);
         return _rsa2.default.rsaSign(source, rsa_private_key);
       } else {
 
@@ -87,7 +91,7 @@ var AlipaySubmit = (function () {
                 formData.input_charset = (this.config.input_charset || '').trim().toLowerCase();
 
                 options = {
-                  ca: fs.readFileSync(this.config.cacert),
+                  ca: _fs2.default.readFileSync(this.config.cacert),
                   formData: formData
                 };
                 failed = false;
