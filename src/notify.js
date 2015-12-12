@@ -50,7 +50,7 @@ class AlipayNotify {
       return md5.md5Verify(source, md5_key, sign);
     } else if (sign_type === 'RSA') {
 
-      const rsa_public_key = fs.readFileSync(this.config.rsa_public_key);
+      const rsa_public_key = fs.readFileSync(this.config.alipay_rsa_public_key);
       return rsa.rsaVerify(source, rsa_public_key, sign);
     } else {
 

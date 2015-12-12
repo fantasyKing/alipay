@@ -128,7 +128,7 @@ var AlipayNotify = (function () {
         return _md2.default.md5Verify(source, md5_key, sign);
       } else if (sign_type === 'RSA') {
 
-        var rsa_public_key = _fs2.default.readFileSync(this.config.rsa_public_key);
+        var rsa_public_key = _fs2.default.readFileSync(this.config.alipay_rsa_public_key);
         return _rsa2.default.rsaVerify(source, rsa_public_key, sign);
       } else {
 
