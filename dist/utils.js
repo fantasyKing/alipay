@@ -20,7 +20,7 @@ var createQueryString = function createQueryString(params) {
 
   var query = '';
   Object.keys(params).forEach(function (key) {
-    return query += key + '=' + params[key] + '&';
+    return query += key + '="' + params[key] + '"&';
   });
   return query.substring(0, query.length - 1);
 };
@@ -29,7 +29,8 @@ var filterParams = function filterParams(params) {
 
   var rst = {};
   Object.keys(params).forEach(function (key) {
-    if (!(key === 'sign' || key === 'sign_type' || params[key] === '')) {
+    if (!(key === 'sign' || key === 'sign_type' || params[key] === '' || typeof params[key] === 'undefined')) {
+
       rst[key] = params[key];
     }
   });

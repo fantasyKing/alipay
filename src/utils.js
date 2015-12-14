@@ -7,7 +7,7 @@ import request from 'request';
 const createQueryString = (params) => {
 
   let query = '';
-  Object.keys(params).forEach(key => query += key + '=' + params[key] + '&');
+  Object.keys(params).forEach(key => query += key + '="' + params[key] + '"&');
   return query.substring(0, query.length - 1);
 };
 
@@ -15,7 +15,10 @@ const filterParams = (params) => {
 
   const rst = {};
   Object.keys(params).forEach(key => {
-    if (!(key === 'sign' || key === 'sign_type' || params[key] === '')) {rst[key] = params[key];}
+    if (!(key === 'sign' || key === 'sign_type' || params[key] === '' || typeof params[key] === 'undefined')) {
+
+      rst[key] = params[key];
+    }
   });
   return rst;
 };
