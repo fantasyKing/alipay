@@ -19,7 +19,7 @@ class AlipaySubmit {
   buildRequestParams(params) {
 
     const sorted_params = utils.sortParams(utils.filterParams(params));
-    sorted_params.sign = this.signParams(sorted_params);
+    sorted_params.sign = encodeURIComponent(this.signParams(sorted_params));
     sorted_params.sign_type = this.config.sign_type.trim().toUpperCase();
     return sorted_params;
   }
@@ -45,7 +45,7 @@ class AlipaySubmit {
 
   buildRequestQueryString(params) {
 
-    return qs.stringify(this.buildRequestParams(params));
+    return utils.createQueryString(this.buildRequestParams(params));
   }
 
   async requestPayResult(params) {

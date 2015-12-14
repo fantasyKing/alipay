@@ -47,7 +47,7 @@ var AlipaySubmit = (function () {
     value: function buildRequestParams(params) {
 
       var sorted_params = _utils2.default.sortParams(_utils2.default.filterParams(params));
-      sorted_params.sign = this.signParams(sorted_params);
+      sorted_params.sign = encodeURIComponent(this.signParams(sorted_params));
       sorted_params.sign_type = this.config.sign_type.trim().toUpperCase();
       return sorted_params;
     }
@@ -75,7 +75,7 @@ var AlipaySubmit = (function () {
     key: 'buildRequestQueryString',
     value: function buildRequestQueryString(params) {
 
-      return _querystring2.default.stringify(this.buildRequestParams(params));
+      return _utils2.default.createQueryString(this.buildRequestParams(params));
     }
   }, {
     key: 'requestPayResult',
