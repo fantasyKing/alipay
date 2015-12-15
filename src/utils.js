@@ -11,6 +11,12 @@ const createQueryString = (params) => {
   return query.substring(0, query.length - 1);
 };
 
+const createQueryStringWithoutQuote = (params) => {
+  let query = '';
+  Object.keys(params).forEach(key => query += key + '=' + params[key] + '&');
+  return query.substring(0, query.length - 1);
+};
+
 const filterParams = (params) => {
 
   const rst = {};
@@ -87,6 +93,7 @@ const Log = (enable) => {
 
 export default {
   createQueryString,
+  createQueryStringWithoutQuote,
   filterParams,
   sortParams,
   fetch,

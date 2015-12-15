@@ -120,7 +120,7 @@ var AlipayNotify = (function () {
 
       var sign_type = params.sign_type.trim().toUpperCase();
       var sign = params.sign;
-      var source = _utils2.default.createQueryString(_utils2.default.sortParams(_utils2.default.filterParams(params)));
+      var source = _utils2.default.createQueryStringWithoutQuote(_utils2.default.sortParams(_utils2.default.filterParams(params)));
 
       if (sign_type === 'MD5') {
 

@@ -20,7 +20,19 @@ describe('test utils', () => {
     };
 
     const queryString = utils.createQueryString(params);
-    expect(queryString).to.be.equal('a=b&c=d&e=1');
+    expect(queryString).to.be.equal('a="b"&c="d"&e="1"');
+  });
+
+  it('createQueryStringWithoutQuote', () => {
+
+    const params = {
+      a: '哈哈',
+      c: 'd',
+      e: 1
+    };
+
+    const queryString = utils.createQueryStringWithoutQuote(params);
+    expect(queryString).to.be.equal('a=哈哈&c=d&e=1');
   });
 
   it('filterParams', () => {

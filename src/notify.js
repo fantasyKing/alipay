@@ -42,7 +42,7 @@ class AlipayNotify {
 
     const sign_type = params.sign_type.trim().toUpperCase();
     const sign = params.sign;
-    const source = utils.createQueryString(utils.sortParams(utils.filterParams(params)));
+    const source = utils.createQueryStringWithoutQuote(utils.sortParams(utils.filterParams(params)));
 
     if (sign_type === 'MD5') {
 

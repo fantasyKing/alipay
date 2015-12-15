@@ -25,6 +25,14 @@ var createQueryString = function createQueryString(params) {
   return query.substring(0, query.length - 1);
 };
 
+var createQueryStringWithoutQuote = function createQueryStringWithoutQuote(params) {
+  var query = '';
+  Object.keys(params).forEach(function (key) {
+    return query += key + '=' + params[key] + '&';
+  });
+  return query.substring(0, query.length - 1);
+};
+
 var filterParams = function filterParams(params) {
 
   var rst = {};
@@ -176,6 +184,7 @@ var Log = function Log(enable) {
 
 exports.default = {
   createQueryString: createQueryString,
+  createQueryStringWithoutQuote: createQueryStringWithoutQuote,
   filterParams: filterParams,
   sortParams: sortParams,
   fetch: fetch,
