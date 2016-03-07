@@ -85,9 +85,9 @@ class AlipaySubmit {
       + this.config['input_charset'].toLowerCase().trim()
       + "' method='" + method + "'>";
 
-    for(let key of Object.keys(para)){
-      let val = para[key];
-      sHtml += "<input type='hidden' name='" + key + "' value='" + val + "'/>";
+    for(let k of Object.keys(para)){
+      let val = para[k];
+      sHtml += "<input type='hidden' name='" + k + "' value='" + val + "'/>";
     }
 
     sHtml = sHtml+ "<input type='submit' value='" + button_name + "'></form>";
