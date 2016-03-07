@@ -4,18 +4,22 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                   * Created on 12/6/15.
+                                                                                                                                                                                                                                                   */
+
 var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } step("next"); }); }; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                              * Created on 12/6/15.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                              */
-
+/**
+ * 为商户签名参数生成带引号 `query string`
+ *
+ * @param params
+ * @returns {string}
+ */
 var createQueryString = function createQueryString(params) {
 
   var query = '';
@@ -25,6 +29,12 @@ var createQueryString = function createQueryString(params) {
   return query.substring(0, query.length - 1);
 };
 
+/**
+ * 为`notify_url` `return_url` 验签生成无引号的 `query string`
+ *
+ * @param params
+ * @returns {string}
+ */
 var createQueryStringWithoutQuote = function createQueryStringWithoutQuote(params) {
   var query = '';
   Object.keys(params).forEach(function (key) {
@@ -33,6 +43,12 @@ var createQueryStringWithoutQuote = function createQueryStringWithoutQuote(param
   return query.substring(0, query.length - 1);
 };
 
+/**
+ * 过滤掉签名或验签时不需要的参数, 包括 `sign`, `sign_type` 以及值为空的参数
+ *
+ * @param params
+ * @returns {{}}
+ */
 var filterParams = function filterParams(params) {
 
   var rst = {};
@@ -45,6 +61,12 @@ var filterParams = function filterParams(params) {
   return rst;
 };
 
+/**
+ * 对参数进行升序排序
+ *
+ * @param params
+ * @returns {{}}
+ */
 var sortParams = function sortParams(params) {
 
   var rst = {};
@@ -77,95 +99,34 @@ var fetch = function fetch(options) {
 };
 
 fetch.get = function (url, options) {
-  return new Promise((function () {
-    var _this = this;
+  return new Promise(function (resolve, reject) {
 
-    var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(resolve, reject) {
-      var opt;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              opt = {};
+    var opt = {};
+    if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
 
-              if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+      Object.assign(opt, options, { url: url, method: 'GET' });
+    } else {
 
-                Object.assign(opt, options, { url: url, method: 'GET' });
-              } else {
-
-                opt = { url: url, method: 'GET' };
-              }
-              _context.next = 4;
-              return fetch(opt).then(resolve).catch(reject);
-
-            case 4:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, _this);
-    }));
-
-    return function (_x, _x2) {
-      return ref.apply(this, arguments);
-    };
-  })());
+      opt = { url: url, method: 'GET' };
+    }
+    fetch(opt).then(resolve).catch(reject);
+  });
 };
 
-fetch.post = (function () {
-  var _this3 = this;
+fetch.post = function (url, options) {
+  return new Promise(function (resolve, reject) {
 
-  var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(url, options) {
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            return _context3.abrupt('return', new Promise((function () {
-              var _this2 = this;
+    var opt = {};
+    if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
 
-              var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(resolve, reject) {
-                var opt;
-                return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                  while (1) {
-                    switch (_context2.prev = _context2.next) {
-                      case 0:
-                        opt = {};
+      Object.assign(opt, options, { url: url, method: 'POST' });
+    } else {
 
-                        if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
-
-                          Object.assign(opt, options, { url: url, method: 'POST' });
-                        } else {
-
-                          opt = { url: url, method: 'POST' };
-                        }
-                        _context2.next = 4;
-                        return fetch(opt).then(resolve).catch(reject);
-
-                      case 4:
-                      case 'end':
-                        return _context2.stop();
-                    }
-                  }
-                }, _callee2, _this2);
-              }));
-
-              return function (_x5, _x6) {
-                return ref.apply(this, arguments);
-              };
-            })()));
-
-          case 1:
-          case 'end':
-            return _context3.stop();
-        }
-      }
-    }, _callee3, _this3);
-  }));
-
-  return function (_x3, _x4) {
-    return ref.apply(this, arguments);
-  };
-})();
+      opt = { url: url, method: 'POST' };
+    }
+    fetch(opt).then(resolve).catch(reject);
+  });
+};
 
 var Log = function Log(enable) {
 
@@ -183,8 +144,8 @@ var Log = function Log(enable) {
 };
 
 exports.default = {
-  createQueryString: createQueryString,
   createQueryStringWithoutQuote: createQueryStringWithoutQuote,
+  createQueryString: createQueryString,
   filterParams: filterParams,
   sortParams: sortParams,
   fetch: fetch,

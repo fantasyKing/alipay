@@ -40,6 +40,7 @@ const rsaDecrypt = (source, privateKey) => {
 const rsaSign = (source, privateKey) => {
 
   const key = ursa.createPrivateKey(privateKey);
+  console.log('reaSign privateKey = ', privateKey, '; key = ', key);
   const signer = ursa.createSigner('sha1');
   signer.update(source, 'utf8');
   return signer.sign(key, 'base64');

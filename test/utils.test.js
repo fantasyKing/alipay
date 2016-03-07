@@ -3,7 +3,7 @@
  */
 
 import 'babel-polyfill';
-import utils from '../src/utils';
+import utils from '../dist/utils';
 import chai from 'chai';
 
 const expect = chai.expect;
@@ -71,11 +71,11 @@ describe('test utils', () => {
 
   it('fetch', async () => {
 
-    const fetchResponse = await utils.fetch({url: 'httdps://google.com', method: 'GET'}).catch((e)=>{console.log(e)});
+    //const fetchResponse = await utils.fetch({url: 'httdps://google.com', method: 'GET'}).catch((e)=>{console.log(e)});
     const getResponse = await utils.fetch.get('https://httpbin.org/get');
     const postResponse = await utils.fetch.post('https://httpbin.org/post', {form: {key: 'value'}});
 
-    assert(!fetchResponse);
+    //assert(!fetchResponse);
     assert(postResponse.statusCode === 200);
     assert(getResponse.statusCode === 200);
   });

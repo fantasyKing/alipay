@@ -15,6 +15,10 @@ let assert = chai.assert;
 describe('test rsa', () => {
 
   const pKeypair = forge.pki.rsa.generateKeyPair({bits: 2048, e: 0x10001});
+  //
+  //console.log(pKeypair);
+  //
+  //console.log('pem', forge.pki.publicKeyToPem(pKeypair.publicKey));
   const pPublicKey = new Buffer(forge.pki.publicKeyToPem(pKeypair.publicKey), 'utf8');
   const pPrivateKey = new Buffer(forge.pki.privateKeyToPem(pKeypair.privateKey), 'utf8');
 
@@ -39,8 +43,8 @@ describe('test rsa', () => {
 
   it('sign verify', () => {
 
-    const signature = rsa.rsaSign(testSource, pPrivateKey);
-    assert(rsa.rsaVerify(testSource, pPublicKey, signature), 'verify should be true');
+    const signature = rsa.rsaSign(testSource, privateKey);
+    assert(rsa.rsaVerify(testSource, publicKey, signature), 'verify should be true');
   });
 
 });

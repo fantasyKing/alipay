@@ -1,12 +1,13 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Created on 12/6/15.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created on 12/6/15.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
 
 var _fs = require('fs');
 
@@ -30,11 +31,11 @@ var _querystring2 = _interopRequireDefault(_querystring);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AlipaySubmit = (function () {
+var AlipaySubmit = function () {
   function AlipaySubmit(config) {
     _classCallCheck(this, AlipaySubmit);
 
@@ -44,28 +45,26 @@ var AlipaySubmit = (function () {
 
   _createClass(AlipaySubmit, [{
     key: 'buildRequestParams',
-    value: function buildRequestParams(params) {
+    value: function buildRequestParams(params, key) {
 
       var sorted_params = _utils2.default.sortParams(_utils2.default.filterParams(params));
-      sorted_params.sign = encodeURIComponent(this.signParams(sorted_params));
+      sorted_params.sign = encodeURIComponent(this.signParams(sorted_params, key));
       sorted_params.sign_type = this.config.sign_type.trim().toUpperCase();
       return sorted_params;
     }
   }, {
     key: 'signParams',
-    value: function signParams(sorted_params) {
+    value: function signParams(sorted_params, key) {
 
       var sign_type = this.config.sign_type.trim().toUpperCase();
       var source = _utils2.default.createQueryString(sorted_params);
 
       if (sign_type === 'MD5') {
 
-        var md5_key = this.config.md5_key;
-        return _md2.default.md5Sign(source, md5_key);
+        return _md2.default.md5Sign(source, key);
       } else if (sign_type === 'RSA') {
 
-        var rsa_private_key = _fs2.default.readFileSync(this.config.rsa_private_key);
-        return _rsa2.default.rsaSign(source, rsa_private_key);
+        return _rsa2.default.rsaSign(source, key);
       } else {
 
         throw new Error('Unknown sign_type: ' + sign_type);
@@ -73,20 +72,20 @@ var AlipaySubmit = (function () {
     }
   }, {
     key: 'buildRequestQueryString',
-    value: function buildRequestQueryString(params) {
+    value: function buildRequestQueryString(params, key) {
 
-      return _utils2.default.createQueryString(this.buildRequestParams(params));
+      return _utils2.default.createQueryString(this.buildRequestParams(params, key));
     }
   }, {
     key: 'requestPayResult',
-    value: (function () {
-      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(params) {
+    value: function () {
+      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(params, key) {
         var formData, options, failed, rst;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                formData = this.buildRequestParams(params);
+                formData = this.buildRequestParams(params, key);
 
                 formData.input_charset = (this.config.input_charset || '').trim().toLowerCase();
 
@@ -102,6 +101,7 @@ var AlipaySubmit = (function () {
 
               case 6:
                 rst = _context.sent;
+
 
                 console.log(rst ? rst.body : failed);
 
@@ -131,15 +131,15 @@ var AlipaySubmit = (function () {
         }, _callee, this);
       }));
 
-      return function requestPayResult(_x) {
+      return function requestPayResult(_x, _x2) {
         return ref.apply(this, arguments);
       };
-    })()
+    }()
   }, {
     key: 'buildRequestForm',
-    value: function buildRequestForm(params, method, button_name) {
+    value: function buildRequestForm(params, key, method, button_name) {
 
-      var para = this.buildRequestParams(params);
+      var para = this.buildRequestParams(params, key);
 
       var sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='" + this.alipay_gateway + "_input_charset=" + this.config['input_charset'].toLowerCase().trim() + "' method='" + method + "'>";
 
@@ -149,10 +149,10 @@ var AlipaySubmit = (function () {
 
       try {
         for (var _iterator = Object.keys(para)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var key = _step.value;
+          var _key = _step.value;
 
-          var val = para[key];
-          sHtml += "<input type='hidden' name='" + key + "' value='" + val + "'/>";
+          var val = para[_key];
+          sHtml += "<input type='hidden' name='" + _key + "' value='" + val + "'/>";
         }
       } catch (err) {
         _didIteratorError = true;
@@ -178,6 +178,6 @@ var AlipaySubmit = (function () {
   }]);
 
   return AlipaySubmit;
-})();
+}();
 
 exports.default = AlipaySubmit;

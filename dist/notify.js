@@ -1,12 +1,12 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Created on 12/6/15.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created on 12/6/15.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
 var _utils = require('./utils');
 
@@ -26,11 +26,11 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AlipayNotify = (function () {
+var AlipayNotify = function () {
   function AlipayNotify(config) {
     _classCallCheck(this, AlipayNotify);
 
@@ -39,10 +39,21 @@ var AlipayNotify = (function () {
     this.http_verify_url = config.http_verify_url;
   }
 
+  /**
+   * 验签 `notify_url` 的调用者是否为支付宝
+   *
+   * key: 如果 `sign_type` 为 md5, 则为 md5_key, 类型 String
+   * 如果 `sign_type` 为 RSA, 则为支付宝的 RSA Public Key, 类型 Buffer
+   *
+   * @param params
+   * @returns {*}
+   */
+
+
   _createClass(AlipayNotify, [{
     key: 'verifyNotify',
-    value: (function () {
-      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(params) {
+    value: function () {
+      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(params, key) {
         var verifyResult, remoteVerifyResult;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -53,7 +64,7 @@ var AlipayNotify = (function () {
                   break;
                 }
 
-                verifyResult = this.verifySign(params);
+                verifyResult = this.verifySign(params, key);
                 _context.next = 4;
                 return this.remoteVerify(params.notify_id);
 
@@ -72,16 +83,15 @@ var AlipayNotify = (function () {
         }, _callee, this);
       }));
 
-      return function verifyNotify(_x) {
+      return function verifyNotify(_x, _x2) {
         return ref.apply(this, arguments);
       };
-    })()
+    }()
   }, {
     key: 'verifyReturn',
-    value: (function () {
-      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(params) {
-        var _verifyResult, _remoteVerifyResult;
-
+    value: function () {
+      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(params, key) {
+        var verifyResult, remoteVerifyResult;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -91,13 +101,13 @@ var AlipayNotify = (function () {
                   break;
                 }
 
-                _verifyResult = this.verifySign(params);
+                verifyResult = this.verifySign(params, key);
                 _context2.next = 4;
                 return this.remoteVerify(params.notify_id);
 
               case 4:
-                _remoteVerifyResult = _context2.sent;
-                return _context2.abrupt('return', _verifyResult && _remoteVerifyResult);
+                remoteVerifyResult = _context2.sent;
+                return _context2.abrupt('return', verifyResult && remoteVerifyResult);
 
               case 6:
                 return _context2.abrupt('return', false);
@@ -110,13 +120,13 @@ var AlipayNotify = (function () {
         }, _callee2, this);
       }));
 
-      return function verifyReturn(_x2) {
+      return function verifyReturn(_x3, _x4) {
         return ref.apply(this, arguments);
       };
-    })()
+    }()
   }, {
     key: 'verifySign',
-    value: function verifySign(params) {
+    value: function verifySign(params, key) {
 
       var sign_type = params.sign_type.trim().toUpperCase();
       var sign = params.sign;
@@ -124,12 +134,10 @@ var AlipayNotify = (function () {
 
       if (sign_type === 'MD5') {
 
-        var md5_key = this.config.md5_key;
-        return _md2.default.md5Verify(source, md5_key, sign);
+        return _md2.default.md5Verify(source, key, sign);
       } else if (sign_type === 'RSA') {
 
-        var rsa_public_key = _fs2.default.readFileSync(this.config.alipay_rsa_public_key);
-        return _rsa2.default.rsaVerify(source, rsa_public_key, sign);
+        return _rsa2.default.rsaVerify(source, key, sign);
       } else {
 
         throw new Error('Unknown sign_type: ' + sign_type);
@@ -137,7 +145,7 @@ var AlipayNotify = (function () {
     }
   }, {
     key: 'remoteVerify',
-    value: (function () {
+    value: function () {
       var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(notify_id) {
         var transport, partner, verify_url, options, failed, response;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -148,9 +156,11 @@ var AlipayNotify = (function () {
                 partner = this.config.partner.trim();
                 verify_url = transport === 'https' ? this.https_verify_url : this.http_verify_url;
 
+
                 verify_url += "partner=" + partner + "&notify_id=" + notify_id;
 
                 options = {};
+
 
                 if (transport === 'https') {
 
@@ -167,6 +177,7 @@ var AlipayNotify = (function () {
 
               case 9:
                 response = _context3.sent;
+
 
                 _utils2.default.Log(1)(response ? response.body : false);
 
@@ -188,13 +199,13 @@ var AlipayNotify = (function () {
         }, _callee3, this);
       }));
 
-      return function remoteVerify(_x3) {
+      return function remoteVerify(_x5) {
         return ref.apply(this, arguments);
       };
-    })()
+    }()
   }]);
 
   return AlipayNotify;
-})();
+}();
 
 exports.default = AlipayNotify;

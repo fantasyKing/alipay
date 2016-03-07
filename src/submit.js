@@ -16,41 +16,40 @@ class AlipaySubmit {
     this.alipay_gateway = config.alipay_gateway;
   }
 
-  buildRequestParams(params) {
+  buildRequestParams(params, key) {
 
+    console.log('buildRequestParams key = ', key);
     const sorted_params = utils.sortParams(utils.filterParams(params));
-    sorted_params.sign = encodeURIComponent(this.signParams(sorted_params));
+    sorted_params.sign = encodeURIComponent(this.signParams(sorted_params, key));
     sorted_params.sign_type = this.config.sign_type.trim().toUpperCase();
     return sorted_params;
   }
 
-  signParams(sorted_params) {
+  signParams(sorted_params, key) {
 
     const sign_type = this.config.sign_type.trim().toUpperCase();
     const source = utils.createQueryString(sorted_params);
 
     if (sign_type === 'MD5') {
 
-      const md5_key = this.config.md5_key;
-      return md5.md5Sign(source, md5_key);
+      return md5.md5Sign(source, key);
     } else if (sign_type === 'RSA') {
 
-      const rsa_private_key = fs.readFileSync(this.config.rsa_private_key);
-      return rsa.rsaSign(source, rsa_private_key);
+      return rsa.rsaSign(source, key);
     } else {
 
       throw new Error('Unknown sign_type: ' + sign_type);
     }
   }
 
-  buildRequestQueryString(params) {
+  buildRequestQueryString(params, key) {
 
-    return utils.createQueryString(this.buildRequestParams(params));
+    return utils.createQueryString(this.buildRequestParams(params, key));
   }
 
-  async requestPayResult(params) {
+  async requestPayResult(params, key) {
 
-    const formData = this.buildRequestParams(params);
+    const formData = this.buildRequestParams(params, key);
     formData.input_charset = (this.config.input_charset || '').trim().toLowerCase();
 
     const options = {
@@ -74,9 +73,9 @@ class AlipaySubmit {
     return failed;
   }
 
-  buildRequestForm(params, method, button_name) {
+  buildRequestForm(params, key, method, button_name) {
 
-    const para = this.buildRequestParams(params);
+    const para = this.buildRequestParams(params, key);
 
     let sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='"
       + this.alipay_gateway
