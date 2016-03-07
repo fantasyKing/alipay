@@ -18,7 +18,6 @@ class AlipaySubmit {
 
   buildRequestParams(params, key) {
 
-    console.log('buildRequestParams key = ', key);
     const sorted_params = utils.sortParams(utils.filterParams(params));
     sorted_params.sign = encodeURIComponent(this.signParams(sorted_params, key));
     sorted_params.sign_type = this.config.sign_type.trim().toUpperCase();
@@ -35,7 +34,12 @@ class AlipaySubmit {
       return md5.md5Sign(source, key);
     } else if (sign_type === 'RSA') {
 
-      return rsa.rsaSign(source, key);
+      let privateKey = key;
+      if (typeof key === 'string') {
+
+        privateKey = new Buffer(key, 'utf8');
+      }
+      return rsa.rsaSign(source, privateKey);
     } else {
 
       throw new Error('Unknown sign_type: ' + sign_type);
@@ -59,8 +63,6 @@ class AlipaySubmit {
 
     let failed = false;
     const rst = await utils.fetch.post(this.alipay_gateway, options).catch(() => failed = true);
-
-    console.log(rst ? rst.body : failed);
 
     if (failed) {
       return failed;

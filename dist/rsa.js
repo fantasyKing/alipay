@@ -1,14 +1,18 @@
+/**
+ * Created on 12/4/15.
+ */
+
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
 var _ursa = require('ursa');
 
 var _ursa2 = _interopRequireDefault(_ursa);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  *
@@ -19,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 var rsaEncrypt = function rsaEncrypt(source, publicKey) {
 
-  var crt = _ursa2.default.createPublicKey(publicKey);
+  var crt = _ursa2['default'].createPublicKey(publicKey);
   return crt.encrypt(source, 'utf8', 'base64');
 };
 
@@ -30,13 +34,9 @@ var rsaEncrypt = function rsaEncrypt(source, publicKey) {
  * fs.readFileSync('/path/to/private.pem'))
  * @returns [String] decrypted raw string.
  */
-/**
- * Created on 12/4/15.
- */
-
 var rsaDecrypt = function rsaDecrypt(source, privateKey) {
 
-  var key = _ursa2.default.createPrivateKey(privateKey);
+  var key = _ursa2['default'].createPrivateKey(privateKey);
   return key.decrypt(source, 'base64', 'utf8');
 };
 
@@ -49,8 +49,8 @@ var rsaDecrypt = function rsaDecrypt(source, privateKey) {
  */
 var rsaSign = function rsaSign(source, privateKey) {
 
-  var key = _ursa2.default.createPrivateKey(privateKey);
-  var signer = _ursa2.default.createSigner('sha1');
+  var key = _ursa2['default'].createPrivateKey(privateKey);
+  var signer = _ursa2['default'].createSigner('sha1');
   signer.update(source, 'utf8');
   return signer.sign(key, 'base64');
 };
@@ -65,10 +65,11 @@ var rsaSign = function rsaSign(source, privateKey) {
  */
 var rsaVerify = function rsaVerify(source, publicKey, signature) {
 
-  var crt = _ursa2.default.createPublicKey(publicKey);
-  var verifier = _ursa2.default.createVerifier('sha1');
+  var crt = _ursa2['default'].createPublicKey(publicKey);
+  var verifier = _ursa2['default'].createVerifier('sha1');
   verifier.update(source, 'utf8');
   return verifier.verify(crt, signature, 'base64');
 };
 
-exports.default = { rsaEncrypt: rsaEncrypt, rsaDecrypt: rsaDecrypt, rsaSign: rsaSign, rsaVerify: rsaVerify };
+exports['default'] = { rsaEncrypt: rsaEncrypt, rsaDecrypt: rsaDecrypt, rsaSign: rsaSign, rsaVerify: rsaVerify };
+module.exports = exports['default'];

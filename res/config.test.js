@@ -2,9 +2,9 @@
  * Created on 12/7/15.
  */
 
-import path from 'path';
+var path = require('path');
 
-export default {
+module.exports = {
   partner: '2088012534717844', //合作身份者id，以2088开头的16位纯数字
   seller_email: 'test@mail.com', //卖家支付宝帐户 必填
   host: 'http://localhost:3083/', //域名

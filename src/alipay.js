@@ -26,7 +26,7 @@ class Alipay {
    * }
    *
    * key: 如果 `sign_type` 为 md5, 则为 md5_key, 类型 String
-   * 如果 `sign_type` 为 RSA, 则为商户的 RSA Private Key, 类型 Buffer
+   * 如果 `sign_type` 为 RSA, 则为商户的 RSA Private Key, 类型 Buffer || String
    *
    * @param data
    * @param key

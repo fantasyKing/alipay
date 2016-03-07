@@ -1,6 +1,8 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
@@ -12,9 +14,9 @@ var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _md = require('./md5');
+var _md5 = require('./md5');
 
-var _md2 = _interopRequireDefault(_md);
+var _md52 = _interopRequireDefault(_md5);
 
 var _rsa = require('./rsa');
 
@@ -28,6 +30,5 @@ var _submit = require('./submit');
 
 var _submit2 = _interopRequireDefault(_submit);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = { utils: _utils2.default, md5: _md2.default, rsa: _rsa2.default, Notify: _notify2.default, Alipay: _alipay2.default, Submit: _submit2.default };
+exports['default'] = { utils: _utils2['default'], md5: _md52['default'], rsa: _rsa2['default'], Notify: _notify2['default'], Alipay: _alipay2['default'], Submit: _submit2['default'] };
+module.exports = exports['default'];

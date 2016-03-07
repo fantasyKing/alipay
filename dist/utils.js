@@ -1,18 +1,24 @@
+/**
+ * Created on 12/6/15.
+ */
+
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
+
+var _Promise = require('babel-runtime/core-js/promise')['default'];
+
+var _Object$assign = require('babel-runtime/core-js/object/assign')['default'];
+
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; }; /**
-                                                                                                                                                                                                                                                   * Created on 12/6/15.
-                                                                                                                                                                                                                                                   */
 
 var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * 为商户签名参数生成带引号 `query string`
@@ -23,7 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var createQueryString = function createQueryString(params) {
 
   var query = '';
-  Object.keys(params).forEach(function (key) {
+  _Object$keys(params).forEach(function (key) {
     return query += key + '="' + params[key] + '"&';
   });
   return query.substring(0, query.length - 1);
@@ -37,7 +43,7 @@ var createQueryString = function createQueryString(params) {
  */
 var createQueryStringWithoutQuote = function createQueryStringWithoutQuote(params) {
   var query = '';
-  Object.keys(params).forEach(function (key) {
+  _Object$keys(params).forEach(function (key) {
     return query += key + '=' + params[key] + '&';
   });
   return query.substring(0, query.length - 1);
@@ -52,7 +58,7 @@ var createQueryStringWithoutQuote = function createQueryStringWithoutQuote(param
 var filterParams = function filterParams(params) {
 
   var rst = {};
-  Object.keys(params).forEach(function (key) {
+  _Object$keys(params).forEach(function (key) {
     if (!(key === 'sign' || key === 'sign_type' || params[key] === '' || typeof params[key] === 'undefined')) {
 
       rst[key] = params[key];
@@ -70,18 +76,18 @@ var filterParams = function filterParams(params) {
 var sortParams = function sortParams(params) {
 
   var rst = {};
-  Object.keys(params).sort().forEach(function (key) {
+  _Object$keys(params).sort().forEach(function (key) {
     return rst[key] = params[key];
   });
   return rst;
 };
 
 var fetch = function fetch(options) {
-  return new Promise(function (resolve, reject) {
+  return new _Promise(function (resolve, reject) {
 
     try {
 
-      (0, _request2.default)(options, function (error, response) {
+      (0, _request2['default'])(options, function (error, response) {
 
         if (error) {
 
@@ -99,32 +105,32 @@ var fetch = function fetch(options) {
 };
 
 fetch.get = function (url, options) {
-  return new Promise(function (resolve, reject) {
+  return new _Promise(function (resolve, reject) {
 
     var opt = {};
-    if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+    if (typeof options === 'object') {
 
-      Object.assign(opt, options, { url: url, method: 'GET' });
+      _Object$assign(opt, options, { url: url, method: 'GET' });
     } else {
 
       opt = { url: url, method: 'GET' };
     }
-    fetch(opt).then(resolve).catch(reject);
+    fetch(opt).then(resolve)['catch'](reject);
   });
 };
 
 fetch.post = function (url, options) {
-  return new Promise(function (resolve, reject) {
+  return new _Promise(function (resolve, reject) {
 
     var opt = {};
-    if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+    if (typeof options === 'object') {
 
-      Object.assign(opt, options, { url: url, method: 'POST' });
+      _Object$assign(opt, options, { url: url, method: 'POST' });
     } else {
 
       opt = { url: url, method: 'POST' };
     }
-    fetch(opt).then(resolve).catch(reject);
+    fetch(opt).then(resolve)['catch'](reject);
   });
 };
 
@@ -143,7 +149,7 @@ var Log = function Log(enable) {
   } : function () {};
 };
 
-exports.default = {
+exports['default'] = {
   createQueryStringWithoutQuote: createQueryStringWithoutQuote,
   createQueryString: createQueryString,
   filterParams: filterParams,
@@ -151,3 +157,4 @@ exports.default = {
   fetch: fetch,
   Log: Log
 };
+module.exports = exports['default'];

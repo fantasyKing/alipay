@@ -1,20 +1,30 @@
+/**
+ * Created on 12/6/15.
+ */
+
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+var _createClass = require('babel-runtime/helpers/create-class')['default'];
+
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
+var _regeneratorRuntime = require('babel-runtime/regenerator')['default'];
+
+var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
+
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created on 12/6/15.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
 var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _md = require('./md5');
+var _md5 = require('./md5');
 
-var _md2 = _interopRequireDefault(_md);
+var _md52 = _interopRequireDefault(_md5);
 
 var _rsa = require('./rsa');
 
@@ -24,13 +34,7 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var AlipayNotify = function () {
+var AlipayNotify = (function () {
   function AlipayNotify(config) {
     _classCallCheck(this, AlipayNotify);
 
@@ -43,101 +47,91 @@ var AlipayNotify = function () {
    * 验签 `notify_url` 的调用者是否为支付宝
    *
    * key: 如果 `sign_type` 为 md5, 则为 md5_key, 类型 String
-   * 如果 `sign_type` 为 RSA, 则为支付宝的 RSA Public Key, 类型 Buffer
+   * 如果 `sign_type` 为 RSA, 则为支付宝的 RSA Public Key, 类型 Buffer || String
    *
    * @param params
+   * @param key
    * @returns {*}
    */
 
-
   _createClass(AlipayNotify, [{
     key: 'verifyNotify',
-    value: function () {
-      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(params, key) {
-        var verifyResult, remoteVerifyResult;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!Object.keys(params).length) {
-                  _context.next = 6;
-                  break;
-                }
-
-                verifyResult = this.verifySign(params, key);
-                _context.next = 4;
-                return this.remoteVerify(params.notify_id);
-
-              case 4:
-                remoteVerifyResult = _context.sent;
-                return _context.abrupt('return', verifyResult && remoteVerifyResult);
-
-              case 6:
-                return _context.abrupt('return', false);
-
-              case 7:
-              case 'end':
-                return _context.stop();
+    value: function verifyNotify(params, key) {
+      var verifyResult, remoteVerifyResult;
+      return _regeneratorRuntime.async(function verifyNotify$(context$2$0) {
+        while (1) switch (context$2$0.prev = context$2$0.next) {
+          case 0:
+            if (!_Object$keys(params).length) {
+              context$2$0.next = 6;
+              break;
             }
-          }
-        }, _callee, this);
-      }));
 
-      return function verifyNotify(_x, _x2) {
-        return ref.apply(this, arguments);
-      };
-    }()
+            verifyResult = this.verifySign(params, key);
+            context$2$0.next = 4;
+            return _regeneratorRuntime.awrap(this.remoteVerify(params.notify_id));
+
+          case 4:
+            remoteVerifyResult = context$2$0.sent;
+            return context$2$0.abrupt('return', verifyResult && remoteVerifyResult);
+
+          case 6:
+            return context$2$0.abrupt('return', false);
+
+          case 7:
+          case 'end':
+            return context$2$0.stop();
+        }
+      }, null, this);
+    }
   }, {
     key: 'verifyReturn',
-    value: function () {
-      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(params, key) {
-        var verifyResult, remoteVerifyResult;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!Object.keys(params).length) {
-                  _context2.next = 6;
-                  break;
-                }
-
-                verifyResult = this.verifySign(params, key);
-                _context2.next = 4;
-                return this.remoteVerify(params.notify_id);
-
-              case 4:
-                remoteVerifyResult = _context2.sent;
-                return _context2.abrupt('return', verifyResult && remoteVerifyResult);
-
-              case 6:
-                return _context2.abrupt('return', false);
-
-              case 7:
-              case 'end':
-                return _context2.stop();
+    value: function verifyReturn(params, key) {
+      var verifyResult, remoteVerifyResult;
+      return _regeneratorRuntime.async(function verifyReturn$(context$2$0) {
+        while (1) switch (context$2$0.prev = context$2$0.next) {
+          case 0:
+            if (!_Object$keys(params).length) {
+              context$2$0.next = 6;
+              break;
             }
-          }
-        }, _callee2, this);
-      }));
 
-      return function verifyReturn(_x3, _x4) {
-        return ref.apply(this, arguments);
-      };
-    }()
+            verifyResult = this.verifySign(params, key);
+            context$2$0.next = 4;
+            return _regeneratorRuntime.awrap(this.remoteVerify(params.notify_id));
+
+          case 4:
+            remoteVerifyResult = context$2$0.sent;
+            return context$2$0.abrupt('return', verifyResult && remoteVerifyResult);
+
+          case 6:
+            return context$2$0.abrupt('return', false);
+
+          case 7:
+          case 'end':
+            return context$2$0.stop();
+        }
+      }, null, this);
+    }
   }, {
     key: 'verifySign',
     value: function verifySign(params, key) {
 
       var sign_type = params.sign_type.trim().toUpperCase();
       var sign = params.sign;
-      var source = _utils2.default.createQueryStringWithoutQuote(_utils2.default.sortParams(_utils2.default.filterParams(params)));
+      var source = _utils2['default'].createQueryStringWithoutQuote(_utils2['default'].sortParams(_utils2['default'].filterParams(params)));
 
       if (sign_type === 'MD5') {
 
-        return _md2.default.md5Verify(source, key, sign);
+        return _md52['default'].md5Verify(source, key, sign);
       } else if (sign_type === 'RSA') {
 
-        return _rsa2.default.rsaVerify(source, key, sign);
+        var publicKey = key;
+        if (typeof key === 'string') {
+
+          publicKey = new Buffer(key, 'utf8');
+        }
+
+        return _rsa2['default'].rsaVerify(source, publicKey, sign);
       } else {
 
         throw new Error('Unknown sign_type: ' + sign_type);
@@ -145,67 +139,57 @@ var AlipayNotify = function () {
     }
   }, {
     key: 'remoteVerify',
-    value: function () {
-      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(notify_id) {
-        var transport, partner, verify_url, options, failed, response;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                transport = this.config.transport.trim().toLocaleLowerCase();
-                partner = this.config.partner.trim();
-                verify_url = transport === 'https' ? this.https_verify_url : this.http_verify_url;
+    value: function remoteVerify(notify_id) {
+      var transport, partner, verify_url, options, failed, response;
+      return _regeneratorRuntime.async(function remoteVerify$(context$2$0) {
+        while (1) switch (context$2$0.prev = context$2$0.next) {
+          case 0:
+            transport = this.config.transport.trim().toLocaleLowerCase();
+            partner = this.config.partner.trim();
+            verify_url = transport === 'https' ? this.https_verify_url : this.http_verify_url;
 
+            verify_url += "partner=" + partner + "&notify_id=" + notify_id;
 
-                verify_url += "partner=" + partner + "&notify_id=" + notify_id;
+            options = {};
 
-                options = {};
+            if (transport === 'https') {
 
-
-                if (transport === 'https') {
-
-                  //options.ca = fs.readFileSync(this.config.cacert);
-                }
-
-                failed = false;
-                _context3.next = 9;
-                return _utils2.default.fetch.get(verify_url, options).catch(function (e) {
-
-                  failed = true;
-                  _utils2.default.Log(1)('remoteVerify error: ', e);
-                });
-
-              case 9:
-                response = _context3.sent;
-
-
-                _utils2.default.Log(1)(response ? response.body : false);
-
-                if (!failed) {
-                  _context3.next = 13;
-                  break;
-                }
-
-                return _context3.abrupt('return', false);
-
-              case 13:
-                return _context3.abrupt('return', response && response.body === 'true');
-
-              case 14:
-              case 'end':
-                return _context3.stop();
+              //options.ca = fs.readFileSync(this.config.cacert);
             }
-          }
-        }, _callee3, this);
-      }));
 
-      return function remoteVerify(_x5) {
-        return ref.apply(this, arguments);
-      };
-    }()
+            failed = false;
+            context$2$0.next = 9;
+            return _regeneratorRuntime.awrap(_utils2['default'].fetch.get(verify_url, options)['catch'](function (e) {
+
+              failed = true;
+              _utils2['default'].Log(1)('remoteVerify error: ', e);
+            }));
+
+          case 9:
+            response = context$2$0.sent;
+
+            _utils2['default'].Log(1)(response ? response.body : false);
+
+            if (!failed) {
+              context$2$0.next = 13;
+              break;
+            }
+
+            return context$2$0.abrupt('return', false);
+
+          case 13:
+            return context$2$0.abrupt('return', response && response.body === 'true');
+
+          case 14:
+          case 'end':
+            return context$2$0.stop();
+        }
+      }, null, this);
+    }
   }]);
 
   return AlipayNotify;
-}();
+})();
 
-exports.default = AlipayNotify;
+exports['default'] = AlipayNotify;
+module.exports = exports['default'];

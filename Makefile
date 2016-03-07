@@ -1,5 +1,5 @@
 dist:
-	babel --plugins kneden src --out-dir dist
+	./node_modules/.bin/babel src --out-dir dist
 
 test:
 	npm test

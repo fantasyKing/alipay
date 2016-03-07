@@ -20,9 +20,10 @@ class AlipayNotify {
    * 验签 `notify_url` 的调用者是否为支付宝
    *
    * key: 如果 `sign_type` 为 md5, 则为 md5_key, 类型 String
-   * 如果 `sign_type` 为 RSA, 则为支付宝的 RSA Public Key, 类型 Buffer
+   * 如果 `sign_type` 为 RSA, 则为支付宝的 RSA Public Key, 类型 Buffer || String
    *
    * @param params
+   * @param key
    * @returns {*}
    */
   async verifyNotify(params, key) {
@@ -58,7 +59,13 @@ class AlipayNotify {
       return md5.md5Verify(source, key, sign);
     } else if (sign_type === 'RSA') {
 
-      return rsa.rsaVerify(source, key, sign);
+      let publicKey = key;
+      if (typeof key === 'string') {
+
+        publicKey = new Buffer(key, 'utf8');
+      }
+
+      return rsa.rsaVerify(source, publicKey, sign);
     } else {
 
       throw new Error('Unknown sign_type: ' + sign_type);
