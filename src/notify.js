@@ -56,13 +56,25 @@ class AlipayNotify {
 
     if (sign_type === 'MD5') {
 
+      if (!key) {
+
+        key = this.config.md5_key;
+      }
+
       return md5.md5Verify(source, key, sign);
     } else if (sign_type === 'RSA') {
 
       let publicKey = key;
-      if (typeof key === 'string') {
 
-        publicKey = new Buffer(key, 'utf8');
+      if (key) {
+
+        if (typeof key === 'string') {
+
+          publicKey = new Buffer(key, 'utf8');
+        }
+      } else {
+
+        publicKey = this.config.alipay_public_key;
       }
 
       return rsa.rsaVerify(source, publicKey, sign);

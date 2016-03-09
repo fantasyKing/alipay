@@ -122,13 +122,25 @@ var AlipayNotify = (function () {
 
       if (sign_type === 'MD5') {
 
+        if (!key) {
+
+          key = this.config.md5_key;
+        }
+
         return _md52['default'].md5Verify(source, key, sign);
       } else if (sign_type === 'RSA') {
 
         var publicKey = key;
-        if (typeof key === 'string') {
 
-          publicKey = new Buffer(key, 'utf8');
+        if (key) {
+
+          if (typeof key === 'string') {
+
+            publicKey = new Buffer(key, 'utf8');
+          }
+        } else {
+
+          publicKey = this.config.alipay_public_key;
         }
 
         return _rsa2['default'].rsaVerify(source, publicKey, sign);

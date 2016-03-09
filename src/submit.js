@@ -31,13 +31,24 @@ class AlipaySubmit {
 
     if (sign_type === 'MD5') {
 
+      if (!key) {
+
+        key = this.config.md5_key;
+      }
       return md5.md5Sign(source, key);
     } else if (sign_type === 'RSA') {
 
       let privateKey = key;
-      if (typeof key === 'string') {
 
-        privateKey = new Buffer(key, 'utf8');
+      if (key) {
+
+        if (typeof key === 'string') {
+
+          privateKey = new Buffer(key, 'utf8');
+        }
+      } else {
+
+        privateKey = this.config.partner_private;
       }
       return rsa.rsaSign(source, privateKey);
     } else {

@@ -65,13 +65,24 @@ var AlipaySubmit = (function () {
 
       if (sign_type === 'MD5') {
 
+        if (!key) {
+
+          key = this.config.md5_key;
+        }
         return _md52['default'].md5Sign(source, key);
       } else if (sign_type === 'RSA') {
 
         var privateKey = key;
-        if (typeof key === 'string') {
 
-          privateKey = new Buffer(key, 'utf8');
+        if (key) {
+
+          if (typeof key === 'string') {
+
+            privateKey = new Buffer(key, 'utf8');
+          }
+        } else {
+
+          privateKey = this.config.partner_private;
         }
         return _rsa2['default'].rsaSign(source, privateKey);
       } else {
@@ -147,10 +158,10 @@ var AlipaySubmit = (function () {
 
       try {
         for (var _iterator = _getIterator(_Object$keys(para)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _key = _step.value;
+          var k = _step.value;
 
-          var val = para[_key];
-          sHtml += "<input type='hidden' name='" + _key + "' value='" + val + "'/>";
+          var val = para[k];
+          sHtml += "<input type='hidden' name='" + k + "' value='" + val + "'/>";
         }
       } catch (err) {
         _didIteratorError = true;

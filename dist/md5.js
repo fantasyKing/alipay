@@ -19,7 +19,7 @@ var md5Sign = function md5Sign(source, key) {
 };
 
 var md5Verify = function md5Verify(source, key, sign) {
-  return md5Sign(source, key) === sign;
+  return md5Sign(source + key, key) === sign;
 };
 
 exports['default'] = { md5Sign: md5Sign, md5Verify: md5Verify };
