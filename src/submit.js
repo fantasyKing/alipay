@@ -48,7 +48,7 @@ class AlipaySubmit {
         }
       } else {
 
-        privateKey = this.config.partner_private;
+        privateKey = new Buffer(this.config.partner_private, 'utf8');
       }
       return rsa.rsaSign(source, privateKey);
     } else {
