@@ -140,7 +140,7 @@ var AlipayNotify = (function () {
           }
         } else {
 
-          publicKey = this.config.alipay_public_key;
+          publicKey = new Buffer(this.config.alipay_public_key, 'utf8');
         }
 
         return _rsa2['default'].rsaVerify(source, publicKey, sign);

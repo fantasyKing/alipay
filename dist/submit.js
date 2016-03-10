@@ -82,7 +82,7 @@ var AlipaySubmit = (function () {
           }
         } else {
 
-          privateKey = this.config.partner_private;
+          privateKey = new Buffer(this.config.partner_private, 'utf8');
         }
         return _rsa2['default'].rsaSign(source, privateKey);
       } else {
