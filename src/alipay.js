@@ -45,7 +45,7 @@ class Alipay {
       it_b_pay: '15d' // 设置未付款交易的超时时间，一旦超时，该笔交易就会自动被关闭。
     };
 
-    Object.keys(data).forEach(key => params[key] = data[key]);
+    Object.keys(data).forEach(k => params[k] = data[k]);
 
     return this.alipaySubmit.buildRequestQueryString(params, key);
   }
@@ -62,7 +62,7 @@ class Alipay {
       _input_charset: this.config.input_charset.toLowerCase().trim()
     };
 
-    Object.keys(data).forEach(key => params[key] = data[key]);
+    Object.keys(data).forEach(k => params[k] = data[k]);
     return this.alipaySubmit.buildRequestForm(parameter, key, "get", "确认");
   }
 
@@ -122,6 +122,20 @@ class Alipay {
     };
 
     return this.alipaySubmit.buildRequestForm(parameter, key, "get", "确认");
+  }
+
+  async verifyOrder(data, key) {
+    const params = {
+      app_id: this.config.alipay_app_id,
+      method: 'alipay.trade.query',
+      charset: 'utf-8',
+      timestamp: (new Date()).toISOString().replace('T', ' ').slice(0, -5),
+      version: '1.0',
+      out_trade_no: data.out_trade_no
+    };
+    Object.keys(data).forEach(k => params[k] = data[k]);
+    const queryString = this.alipaySubmit.buildRequestQueryString(params, key);
+    return await this.alipayNotify.verifyOrder(queryString);
   }
 
   async verifyNotify(params, key) {

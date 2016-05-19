@@ -75,8 +75,8 @@ var Alipay = (function () {
         it_b_pay: '15d' // 设置未付款交易的超时时间，一旦超时，该笔交易就会自动被关闭。
       };
 
-      _Object$keys(data).forEach(function (key) {
-        return params[key] = data[key];
+      _Object$keys(data).forEach(function (k) {
+        return params[k] = data[k];
       });
 
       return this.alipaySubmit.buildRequestQueryString(params, key);
@@ -95,8 +95,8 @@ var Alipay = (function () {
         _input_charset: this.config.input_charset.toLowerCase().trim()
       };
 
-      _Object$keys(data).forEach(function (key) {
-        return params[key] = data[key];
+      _Object$keys(data).forEach(function (k) {
+        return params[k] = data[k];
       });
       return this.alipaySubmit.buildRequestForm(parameter, key, "get", "确认");
     }
@@ -159,6 +159,38 @@ var Alipay = (function () {
       };
 
       return this.alipaySubmit.buildRequestForm(parameter, key, "get", "确认");
+    }
+  }, {
+    key: 'verifyOrder',
+    value: function verifyOrder(data, key) {
+      var params, queryString;
+      return _regeneratorRuntime.async(function verifyOrder$(context$2$0) {
+        while (1) switch (context$2$0.prev = context$2$0.next) {
+          case 0:
+            params = {
+              app_id: this.config.alipay_app_id,
+              method: 'alipay.trade.query',
+              charset: 'utf-8',
+              timestamp: new Date().toISOString().replace('T', ' ').slice(0, -5),
+              version: '1.0',
+              out_trade_no: data.out_trade_no
+            };
+
+            _Object$keys(data).forEach(function (k) {
+              return params[k] = data[k];
+            });
+            queryString = this.alipaySubmit.buildRequestQueryString(params, key);
+            context$2$0.next = 5;
+            return _regeneratorRuntime.awrap(this.alipayNotify.verifyOrder(queryString));
+
+          case 5:
+            return context$2$0.abrupt('return', context$2$0.sent);
+
+          case 6:
+          case 'end':
+            return context$2$0.stop();
+        }
+      }, null, this);
     }
   }, {
     key: 'verifyNotify',

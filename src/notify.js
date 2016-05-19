@@ -16,6 +16,21 @@ class AlipayNotify {
     this.http_verify_url = config.http_verify_url;
   }
 
+  async verifyOrder(queryString) {
+    const url = 'https://openapi.alipay.com/gateway.do?' + queryString;
+    let error = null;
+    const response = await utils.fetch.get(url).catch(e => {
+      error = e;
+    });
+    if (error) {
+      console.log('verifyOrder result = ', error);
+      throw error;
+    }
+    const result = JSON.parse(response.body);
+    console.log('verifyOrder result = ', result);
+    return result;
+  }
+
   /**
    * 验签 `notify_url` 的调用者是否为支付宝
    *

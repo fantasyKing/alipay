@@ -43,18 +43,55 @@ var AlipayNotify = (function () {
     this.http_verify_url = config.http_verify_url;
   }
 
-  /**
-   * 验签 `notify_url` 的调用者是否为支付宝
-   *
-   * key: 如果 `sign_type` 为 md5, 则为 md5_key, 类型 String
-   * 如果 `sign_type` 为 RSA, 则为支付宝的 RSA Public Key, 类型 Buffer || String
-   *
-   * @param params
-   * @param key
-   * @returns {*}
-   */
-
   _createClass(AlipayNotify, [{
+    key: 'verifyOrder',
+    value: function verifyOrder(queryString) {
+      var url, error, response, result;
+      return _regeneratorRuntime.async(function verifyOrder$(context$2$0) {
+        while (1) switch (context$2$0.prev = context$2$0.next) {
+          case 0:
+            url = 'https://openapi.alipay.com/gateway.do?' + queryString;
+            error = null;
+            context$2$0.next = 4;
+            return _regeneratorRuntime.awrap(_utils2['default'].fetch.get(url)['catch'](function (e) {
+              error = e;
+            }));
+
+          case 4:
+            response = context$2$0.sent;
+
+            if (!error) {
+              context$2$0.next = 8;
+              break;
+            }
+
+            console.log('verifyOrder result = ', error);
+            throw error;
+
+          case 8:
+            result = JSON.parse(response.body);
+
+            console.log('verifyOrder result = ', result);
+            return context$2$0.abrupt('return', result);
+
+          case 11:
+          case 'end':
+            return context$2$0.stop();
+        }
+      }, null, this);
+    }
+
+    /**
+     * 验签 `notify_url` 的调用者是否为支付宝
+     *
+     * key: 如果 `sign_type` 为 md5, 则为 md5_key, 类型 String
+     * 如果 `sign_type` 为 RSA, 则为支付宝的 RSA Public Key, 类型 Buffer || String
+     *
+     * @param params
+     * @param key
+     * @returns {*}
+     */
+  }, {
     key: 'verifyNotify',
     value: function verifyNotify(params, key) {
       var verifyResult, remoteVerifyResult;
